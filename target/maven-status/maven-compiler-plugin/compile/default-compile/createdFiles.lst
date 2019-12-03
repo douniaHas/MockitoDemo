@@ -1,0 +1,8 @@
+service\BasicModule.class
+service\Employee.class
+service\EmployeeRepositoryImpl.class
+service\EmployeeManager.class
+service\BankServiceImpl.class
+service\EmployeeRepository.class
+service\EmployeeManagerEntry.class
+service\BankService.class
