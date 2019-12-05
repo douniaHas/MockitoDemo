@@ -19,6 +19,7 @@ import java.util.Collections;
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.validateMockitoUsage;
 
@@ -250,14 +251,37 @@ public class EmployeeManagerSuiteTest1 {
     }
 
     @Test
-    public void validate_mockito_usage_18(){
+    public void validate_mockito_usage_18() {
         when(employeeRepository.findAll());
         validateMockitoUsage();//TODO : justifier si j'utilise pas de Runner mockito
     }
 
     @Test
-    public void aliases_behaviour_driven_development(){
+    public void aliases_behaviour_driven_development_19(){
+        //given
+        given(employeeRepository.findAll()).willReturn(Arrays.asList(new Employee("id1",3)));
+        given(bankService.pay(anyString(), any(double.class))).willReturn(3d);
 
+        //when
+        int payments = employeeManager.payEmployees();
+
+        //then
+        assertEquals(3,payments);
+    }
+
+    @Test // TODO : quelle utilite ?
+    public void serializable_mocks_20(){
+        employeeRepository = mock(EmployeeRepository.class, withSettings().serializable());
+    }
+
+    @Test
+    public void New_annotations_Captor_Spy_InjectMocks(){
+        when(employeeRepository.findAll()).thenReturn(Arrays.asList(new Employee("id1",3)));
+        when(bankService.pay(anyString(), any(double.class))).thenReturn(3d);
+
+        employeeManager.payEmployees();
+
+        verify(employeeRepository).findAll();
     }
 
 }
